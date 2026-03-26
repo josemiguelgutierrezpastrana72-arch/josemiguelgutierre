@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Fútbol Stats ⚽</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #0b0f1a, #1a2238);
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+.match {
+  background: #111827;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 15px auto;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.live {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+.progress {
+  height: 10px;
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 5px 0;
+}
+
+.bar {
+  height: 100%;
+  background: #22c55e;
+}
+
+button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 10px;
+  background: #22c55e;
+  color: white;
+  cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>⚽ Fútbol Stats</h1>
+
+<button onclick="actualizar()">Actualizar datos 🔄</button>
+
+<div id="matches"></div>
+
+<script>
+
+let matches = [
+  {
+    home: "Real Madrid",
+    away: "Barcelona",
+    date: "Hoy - 7:00 PM",
+    possessionHome: 55,
+    possessionAway: 45,
+    penalties: "1 - 0",
+    status: "EN VIVO"
+  },
+  {
+    home: "Liverpool",
+    away: "Chelsea",
+    date: "Mañana - 3:00 PM",
+    possessionHome: 50,
+    possessionAway: 50,
+    penalties: "0 - 0",
+    status: "PRÓXIMO"
+  }
+];
+
+function render() {
+  const container = document.getElementById("matches");
+  container.innerHTML = "";
+
+  matches.forEach(match => {
+    const div = document.createElement("div");
+    div.classList.add("match");
+
+    div.innerHTML = `
+      <h2>${match.home} vs ${match.away}</h2>
+      <p>📅 ${match.date}</p>
+
+      <p>📊 Posesión</p>
+      <div class="progress">
+        <div class="bar" style="width:${match.possessionHome}%"></div>
+      </div>
+      <small>${match.possessionHome}% - ${match.possessionAway}%</small>
+
+      <p>⚽ Penales: ${match.penalties}</p>
+
+      <p class="${match.status === 'EN VIVO' ? 'live' : ''}">
+        ${match.status}
+      </p>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function actualizar() {
+  matches.forEach(match => {
+    if (match.status === "EN VIVO") {
+      match.possessionHome = Math.floor(Math.random() * 100);
+      match.possessionAway = 100 - match.possessionHome;
+    }
+  });
+
+  render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
